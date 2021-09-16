@@ -51,6 +51,18 @@ resource "azurerm_network_security_group" "myterraformnsg" {
     }
 }
 
+# Create public IPs
+resource "azurerm_public_ip" "myterraformpublicip" {
+    name                         = "myPublicIP"
+    location                     = "eastus"
+    resource_group_name          = "devopsrg"
+    allocation_method            = "Dynamic"
+
+    tags = {
+        environment = "Terraform Demo"
+    }
+}
+
 resource "azurerm_network_interface" "myterraformnic" {
     name                        = "myNIC"
     location                    = "eastus"
@@ -60,7 +72,7 @@ resource "azurerm_network_interface" "myterraformnic" {
         name                          = "myNicConfiguration"
         subnet_id                     = azurerm_subnet.myterraformsubnet.id
         private_ip_address_allocation = "Dynamic"
-        public_ip_address_id          = "web-static"
+        public_ip_address_id          = azurerm_public_ip.myterraformpublicip.id
     }
 
     tags = {
