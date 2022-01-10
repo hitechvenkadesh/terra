@@ -1,0 +1,30 @@
+pipeline{
+    agent {label 'main'}
+    stages{
+        stage('CLEAN WORKSPACE JENKINS SERVER'){
+            steps{
+                echo'cleaning the workspace'
+                cleanWs()
+            }
+            }
+    stage('CLONE THE SOURCE CODE FROM GIT-HUB'){
+        steps{
+            echo 'In SCM stage'
+            git credentialsId : '21780d0b-4309-4c42-a8a6-5f3ca842c9c8', url : 'https://github.com/sowmijeyam/test11.git' ,branch : 'main'
+        
+        }
+        }
+    stage('Terraform Execution -for Log Management'){
+        steps{
+            sh'''
+            ls
+            pwd
+            terraform init
+            terraform plan  -var acc_no=${acc_no}, -var access_key=${access_key}, -var secret_access_key=${secret_access_key}
+            terraform apply  -var acc_no=${acc_no}, -var access_key=${access_key}, -var secret_access_key=${secret_access_key} -no-color --auto-approve
+            '''
+        }
+    }
+}
+}
+    
