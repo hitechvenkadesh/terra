@@ -7,9 +7,9 @@
   tasks:
     - name: Create a Storage Account
       azure_rm_storageaccount:
-        resource_group: ansiblerg
+        resource_group: jenkins
         location: eastus
-        name: successb73
+        name: successb74b73
         kind: StorageV2
         access_tier: Hot
         account_type: Standard_LRS
